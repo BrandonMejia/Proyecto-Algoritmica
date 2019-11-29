@@ -16,6 +16,7 @@ app.secret_key = 'mysecretkey'
 def Index():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM contacts')
+    cur.close()
     data = cur.fetchall()
     return render_template('index.html', contacts= data)
 
