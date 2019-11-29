@@ -31,3 +31,37 @@ def add_contact():
         mysql.connection.commit()
         flash('Contacto agregado satisfactoriamente')
         return redirect(url_for('Index'))
+<<<<<<< HEAD
+=======
+
+@app.route('/edit/<id>')
+def get_contact(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM contacts WHERE id = %s" % id)
+    data = cur.fetchall()
+    return render_template('edit.contact.html', contact=data[0])
+
+@app.route('/update/<id>', methods=['POST'])
+def update_contact(id):
+    if request.method == 'POST':
+        fullname = request.form['fullname']
+        phone = request.form['phone']
+        email = request.form['email']
+        cur=mysql.connection.cursor()
+        cur.execute("UPDATE contacts SET fullname = %s, TELEFONO = %s, email = %s WHERE id=%s",(fullname,phone,email,id))
+        mysql.connection.commit()
+        flash('Contacto actualizado satisfactoriamente')
+        return redirect(url_for('Index'))
+
+@app.route('/delete/<string:id>')
+def delete_contact(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM contacts WHERE id= {0}'.format(id))
+    mysql.connection.commit()
+    flash('Contacto removido satisfactoriamente')
+    return redirect(url_for('Index'))
+
+if __name__ == '__main__' :
+    app.run(port = 3000, debug = True)
+ 
+>>>>>>> 41bd03e0a46a970ef2a069e7be2da002d2570cf4
